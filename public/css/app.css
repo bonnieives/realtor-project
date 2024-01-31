@@ -1,0 +1,27 @@
+/* WELCOME.BLADE.PHP */
+
+.antialiased {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 50px;
+    background-color: rgba(173, 189, 183, 0.37);
+}
+
+.login_form, .signup_form{
+    padding: 5%;
+    width: 60%;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* SIGNUP_FORM.BLADE.PHP */
+
+.sign-up-form {
+    background-color: rgba(128, 128, 128, 0.144)  !important;
+} 
