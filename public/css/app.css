@@ -24,4 +24,7 @@
 
 .sign-up-form {
     background-color: rgba(128, 128, 128, 0.144)  !important;
-} 
+}
+#btn-primary-signup{
+    margin-top: 20px !important;
+}

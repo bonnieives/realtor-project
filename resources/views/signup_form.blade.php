@@ -43,10 +43,86 @@
                 <input type="password" class="form-control sign-up-form" id="inputConfirmPassword" aria-describedby="confirmPasswordHelp">
                 <div id="confirmPasswordHelp" class="form-text"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownBtn">
+                    Choose your role
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" value="1" onclick="setRole('Tenant', 'tenant')">Tenant</a></li>
+                    <li><a class="dropdown-item" value="2" onclick="setRole('Property Owner', 'owner')">Property Owner</a></li>
+                    <li><a class="dropdown-item" value="3" onclick="setRole('Property Manager', 'manager')">Property Manager</a></li>
+                    <li><a class="dropdown-item" value="4" onclick="setRole('Administrator', 'admin')">Administrator</a></li>
+                </ul>
+                <div id="dropdownHelp" class="form-text"></div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-primary-signup">Submit</button>
         </form>
 
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirm Submission</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBodyContent">
+                        Are you sure you want to submit the form with the provided information?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
         <script>
+            var selectedRole = "";
+
+            function submitForm() {
+
+                var form = document.querySelector('.signup_form');
+                
+                if (form.checkValidity()){
+                    form.submit();
+                } else {
+                    alert('Please fill in all required fields with valid data.')
+                }
+            }
+
+            function setRole(role,value) {
+
+                selectedRole = role;
+
+                document.getElementById('roleDropdownBtn').innerHTML = 'Role: ' + role;
+
+            }
+
+            function showConfirmationModal(event) {
+                event.preventDefault(); // Prevent the form from submitting directly
+
+                // Collect form data
+                var firstName = document.getElementById('inputFirstName').value;
+                var lastName = document.getElementById('inputLastName').value;
+                var email = document.getElementById('inputEmail').value;
+
+
+                // Populate modal content
+                var modalBody = document.getElementById('modalBodyContent');
+                modalBody.innerHTML = '<p><strong>First Name:</strong> ' + firstName + '</p>' +
+                                    '<p><strong>Last Name:</strong> ' + lastName + '</p>' +
+                                    '<p><strong>Email:</strong> ' + email + '</p>' +
+                                    '<p id="selectedRoleText"><strong>Role:</strong> ' + selectedRole + '</p>';
+
+                // Show the confirmation modal
+                var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                confirmationModal.show();
+
+                return false;
+        }
 
             function validateForm() {
 
@@ -62,12 +138,18 @@
                 var confirmPassword = document.getElementById('inputConfirmPassword').value;
                 var passwordHelp = document.getElementById('passwordHelp');
                 var confirmPasswordHelp = document.getElementById('confirmPasswordHelp');
+                var buttonText = document.getElementById('roleDropdownBtn').innerText.trim();
+                var selectedRole = buttonText.replace('Choose your role', '').trim();
+                var dropdownHelp = document.getElementById('dropdownHelp');
 
                 var tempFirstNameHelp = "You can input an composed name, as you wish.";
                 var tempLastNameHelp = "You can input an composed name here too.";
                 var tempEmailHelp = "We'll never share your email with anyone else.";
                 var tempPasswordHelp = "Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.";
                 var tempConfirmPasswordHelp = "";
+                var tempDropdownHelp = "Please choose your role.";
+
+                var isFormValid = false;
 
                 if(!isValidName(firstName)) {
 
@@ -84,11 +166,9 @@
                     confirmPasswordHelp.style.color =  '#212529BF'
                     
                     
-                    return false;
+                    isFormValid = false;
 
-                }
-
-                if(!isValidName(lastName)) {
+                } else if(!isValidName(lastName)) {
 
                     firstNameHelp.innerHTML = tempFirstNameHelp
                     lastNameHelp.innerHTML = "Invalid name format. You must add only alphabetic characters."
@@ -102,11 +182,9 @@
                     passwordHelp.style.color =  '#212529BF'
                     confirmPasswordHelp.style.color =  '#212529BF'
 
-                    return false;
+                    isFormValid = false;
 
-                }
-
-                if (!isValidEmail(email)) {
+                } else if (!isValidEmail(email)) {
 
                     firstNameHelp.innerHTML = tempFirstNameHelp
                     lastNameHelp.innerHTML = tempLastNameHelp
@@ -120,10 +198,8 @@
                     passwordHelp.style.color =  '#212529BF'
                     confirmPasswordHelp.style.color =  '#212529BF'
 
-                    return false;
-                }
-
-                if (password.length < 8 || password.length > 20) {
+                    isFormValid = false;
+                } else if (password.length < 8 || password.length > 20) {
 
                     firstNameHelp.innerHTML = tempFirstNameHelp
                     lastNameHelp.innerHTML = tempLastNameHelp
@@ -137,7 +213,7 @@
                     passwordHelp.style.color =  'red'
                     confirmPasswordHelp.style.color =  '#212529BF'
                     
-                    return false;
+                    isFormValid = false;
                 } else if (password != confirmPassword) {
                     
                     firstNameHelp.innerHTML = tempFirstNameHelp
@@ -152,7 +228,7 @@
                     passwordHelp.style.color =  '#212529BF'
                     confirmPasswordHelp.style.color =  'red'
                     
-                    return false;
+                    isFormValid = false;
                 } else if (/\s/.test(password)) {
 
                     firstNameHelp.innerHTML = tempFirstNameHelp
@@ -167,10 +243,20 @@
                     passwordHelp.style.color =  'red'
                     confirmPasswordHelp.style.color =  '#212529BF'
                 
-                    return false;
+                    isFormValid = false;
+                } else if (!(selectedRole == "Role: Tenant" || selectedRole == "Role: Property Owner" || selectedRole == "Role: Property Manager" || selectedRole == "Role: Administrator")) {
+                    dropdownHelp.innerHTML = tempDropdownHelp;
+                    isFormValid = false;
+                } else {
+                    isFormValid = true;
                 }
 
-                return true;
+                if (isFormValid) {
+                    showConfirmationModal(event);
+                    return true;
+                } else {
+                    return false;
+                }
 
             }
 
