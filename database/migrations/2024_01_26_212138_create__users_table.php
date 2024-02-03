@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('myusers', function (Blueprint $table) {
-            $table->string('UserId')->primary();
-            $table->string('CategoryId');
-            $table->foreign('CategoryId')->references('CategoryId')->on('categories');
+            $table->id();
+            $table->foreignId('CategoryId')->constrained('categories');
             $table->string('FirstName');
             $table->string('LastName');
             $table->string('Email');

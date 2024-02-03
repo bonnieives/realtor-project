@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Users extends Model
 {
-    protected $fillable = ['UserId','CategoryId','FirstName','LastName','Email','Password'];
 
-    protected $primaryKey = 'UserId';
+    protected $table = 'myusers';
+
+    protected $fillable = ['FirstName','LastName','Email','Password','CategoryId'];
 
     public $timestamps = false;
 
     public function category(){
-        return $this->belongsTo(Categories::class,'CategoryId','CategoryId');
+        return $this->belongsTo('App\Models\Categories', 'CategoryId');
     }
 
     use HasFactory;

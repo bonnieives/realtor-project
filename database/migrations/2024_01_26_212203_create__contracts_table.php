@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->string('ContractId')->primary();
-            $table->string('TenantId');
-            $table->foreign('TenantId')->references('UserId')->on('myusers');
-            $table->string('PropertyId');
-            $table->foreign('PropertyId')->references('PropertyId')->on('properties');
+            $table->id();
+            $table->foreignId('TenantId')->constrained('myusers');
+            $table->foreignId('PropertyId')->constrained('properties');
             $table->date('InitialDate');
             $table->date('FinalDate');
             $table->decimal('Value', 10, 2);

@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->string('EventId')->primary();
-            $table->string('ContractId');
-            $table->foreign('ContractId')->references('ContractId')->on('contracts');
-            $table->string('ManagerId');
-            $table->foreign('ManagerId')->references('UserId')->on('myusers');
+            $table->id();
+            $table->foreignId('ContractId')->constrained('contracts');
+            $table->foreignId('ManagerId')->constrained('myusers');
             $table->string('Description');
             $table->timestamps();
         });

@@ -7,14 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointments extends Model
 {
-    protected $fillable = ['AppointmentId','PropertyId','Date','Time'];
-
-    protected $primaryKey = 'AppointmentId';
+    protected $fillable = ['Date','Time','PropertyId'];
 
     public $timestamps = false;
 
     public function property(){
-        return $this->belongsTo(Contracts::class,'PropertyId','PropertyId');
+        return $this->belongsTo('App\Models\Properties');
     }
 
     use HasFactory;

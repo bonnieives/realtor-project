@@ -7,14 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Messages extends Model
 {
-    protected $fillable = ['MessageId','PropertyId','Description'];
-
-    protected $primaryKey = 'MessageId';
+    protected $fillable = ['Description','PropertyId'];
 
     public $timestamps = false;
 
     public function message(){
-        return $this->belongsTo(Properties::class,'PropertyId','PropertyId');
+        return $this->belongsTo('App\Models\Properties');
     }
 
     use HasFactory;

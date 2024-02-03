@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contracts extends Model
 {
-    protected $fillable = ['ContractId','TenantId','PropertyId','InitialDate','FinalDate','Value','PayDay'];
-
-    protected $primaryKey = 'ContractId';
+    protected $fillable = ['InitialDate','FinalDate','Value','PayDay','TenantId','PropertyId'];
 
     public $timestamps = false;
 
     public function tenant(){
-        return $this->belongsTo(Users::class,'TenantId','UserId');
+        return $this->belongsTo('App\Models\Users');
     }
 
     public function property(){
-        return $this->belongsTo(Properties::class,'PropertyId','PropertyId');
+        return $this->belongsTo('App\Models\Properties');
     }
 
     use HasFactory;

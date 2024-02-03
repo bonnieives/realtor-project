@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
-    protected $fillable = ['CategoryId','Description'];
-
-    protected $primaryKey = 'CategoryId';
+    protected $fillable = ['Description'];
 
     public $incrementing = false;
 

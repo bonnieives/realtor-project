@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MyUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('/signup-form', [Controller::class, 'showSignUpForm'])->name('signup-form');
+Route::post('/created', [MyUserController::class, 'store'])->name('created');
+Route::post('/signup-form', [MyUserController::class, 'store'])->name('submit.form')->middleware('web');

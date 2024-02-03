@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Events extends Model
 {
-    protected $fillable = ['EventId','ContractId','ManagerId','Description'];
-
-    protected $primaryKey = 'EventId';
+    protected $fillable = ['Description','ContractId','ManagerId'];
 
     public $timestamps = false;
 
     public function contract(){
-        return $this->belongsTo(Contracts::class,'ContractId','ContractId');
+        return $this->belongsTo('App\Models\Contracts');
     }
 
     public function manager(){
-        return $this->belongsTo(Users::class,'ManagerId','UserId');
+        return $this->belongsTo('App\Models\Users');
     }
 
     use HasFactory;

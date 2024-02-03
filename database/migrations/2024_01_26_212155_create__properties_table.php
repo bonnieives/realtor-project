@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('properties', function (Blueprint $table) {
-            $table->string('PropertyId')->primary();
-            $table->string('OwnerId');
-            $table->foreign('OwnerId')->references('UserId')->on('myusers');
-            $table->string('StatusId');
-            $table->foreign('StatusId')->references('StatusId')->on('status');
+            $table->id();
+            $table->foreignId('OwnerId')->constrained('myusers');
+            $table->foreignId('StatusId')->constrained('status');
             $table->unsignedInteger('CivicNumber');
             $table->string('Address');
             $table->unsignedInteger('Apartment');

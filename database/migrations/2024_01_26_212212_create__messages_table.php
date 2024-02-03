@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->string('MessageId')->primary();
-            $table->string('PropertyId');
-            $table->foreign('PropertyId')->references('PropertyId')->on('properties');
+            $table->id();
+            $table->foreignId('PropertyId')->constrained('properties');
             $table->string('Description');
             $table->timestamps();
         });

@@ -16,7 +16,19 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     </head>
     <body class="antialiased">
+        
         <form class="login_form">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <h2>Realtors Montreal</h2>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email address:</label>

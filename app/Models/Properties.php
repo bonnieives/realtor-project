@@ -7,18 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Properties extends Model
 {
-    protected $fillable = ['PropertyId','OwnerId','StatusId','CivicNumber','Address','Apartment','Zip','City','Province'];
-
-    protected $primaryKey = 'PropertyId';
+    protected $fillable = ['CivicNumber','Address','Apartment','Zip','City','Province','OwnerId','StatusId'];
 
     public $timestamps = false;
 
     public function owner(){
-        return $this->belongsTo(Users::class,'OwnerId','UserId');
+        return $this->belongsTo('App\Models\Users');
     }
 
     public function status(){
-        return $this->belongsTo(Status::class,'StatusId','StatusId');
+        return $this->belongsTo('App\Models\Status');
     }
 
     use HasFactory;
