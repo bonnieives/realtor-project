@@ -17,7 +17,8 @@
     </head>
     <body class="antialiased">
         
-        <form class="login_form">
+        <form class="login_form" method="POST" action="{{ route('login') }}">
+        @csrf
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -32,15 +33,15 @@
             <h2>Realtors Montreal</h2>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email address:</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <input type="email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="name@example.com">
             </div>
             <label for="inputPassword5" class="form-label">Password</label>
-            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+            <input type="password" id="inputPassword5" class="form-control" name="password" aria-describedby="passwordHelpBlock">
             <div id="passwordHelpBlock" class="form-text">
                 Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
             </div>
 
-            <button type="button" class="btn btn-primary btn-sm">Login</button>
+            <button type="submit" class="btn btn-primary btn-sm">Login</button>
             <button href="{{ route('signup-form') }}" type="button" class="btn btn-secondary btn-sm">Signup</button>
 
         </form>
